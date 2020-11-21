@@ -1,0 +1,60 @@
+C0 in lock. Wants 2. Buffer: 0
+firstConsumer: C0 wants 2
+P0 in lock. Wants 4. Buffer: 0
+P0 produced 4
+P1 in lock. Wants 2. Buffer: 4
+P1 produced 2
+P1 in lock. Wants 3. Buffer: 6
+P1 produced 3
+P1 in lock. Wants 1. Buffer: 9
+P1 produced 1
+P2 in lock. Wants 2. Buffer: 10
+firstProducer: P2 wants 2
+C0 consumed 2
+C0 in lock. Wants 5. Buffer: 8
+C0 consumed 5
+C0 in lock. Wants 3. Buffer: 3
+C0 consumed 3
+C0 in lock. Wants 4. Buffer: 0
+firstConsumer: C0 wants 4
+P0 in lock. Wants 4. Buffer: 0
+P0 produced 4
+P0 in lock. Wants 3. Buffer: 4
+P0 produced 3
+P1 in lock. Wants 3. Buffer: 7
+P1 produced 3
+P1 in lock. Wants 1. Buffer: 10
+firstProducer: P1 wants 1
+firstProducer: P2 wants 2
+C0 consumed 4
+C0 in lock. Wants 3. Buffer: 6
+C0 consumed 3
+C0 in lock. Wants 2. Buffer: 3
+C0 consumed 2
+C0 in lock. Wants 5. Buffer: 1
+firstConsumer: C0 wants 5
+P0 in lock. Wants 1. Buffer: 1
+P0 produced 1
+P0 in lock. Wants 1. Buffer: 2
+P0 produced 1
+P0 in lock. Wants 4. Buffer: 3
+P0 produced 4
+P0 in lock. Wants 3. Buffer: 7
+P0 produced 3
+P0 in lock. Wants 3. Buffer: 10
+firstProducer: P0 wants 3
+firstProducer: P1 wants 1
+firstProducer: P2 wants 2
+C0 consumed 5
+C0 in lock. Wants 5. Buffer: 5
+C0 consumed 5
+C0 in lock. Wants 5. Buffer: 0
+firstConsumer: C0 wants 5
+P0 produced 3
+P0 in lock. Wants 3. Buffer: 3
+restProducers: P0 wants 3
+P1 produced 1
+P1 in lock. Wants 1. Buffer: 4
+restProducers: P1 wants 1
+firstConsumer: C0 wants 5
+restProducers: P0 wants 3
