@@ -1,6 +1,6 @@
-package lab7.active_object.scheduler;
+package lab7.asynchronous.active_object.scheduler;
 
-import lab7.active_object.method_requests.IMethodRequest;
+import lab7.asynchronous.active_object.method_requests.IMethodRequest;
 
 public class BufferScheduler implements Runnable {
 
@@ -25,7 +25,7 @@ public class BufferScheduler implements Runnable {
             try {
                 dequeue();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                break;          //executor invoked shutdownNow
             }
         }
     }

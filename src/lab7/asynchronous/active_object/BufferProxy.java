@@ -1,8 +1,8 @@
-package lab7.active_object;
+package lab7.asynchronous.active_object;
 
-import lab7.active_object.method_requests.ConsumeMethodRequest;
-import lab7.active_object.method_requests.ProduceMethodRequest;
-import lab7.active_object.scheduler.BufferScheduler;
+import lab7.asynchronous.active_object.method_requests.ConsumeMethodRequest;
+import lab7.asynchronous.active_object.method_requests.ProduceMethodRequest;
+import lab7.asynchronous.active_object.scheduler.BufferScheduler;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

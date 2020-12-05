@@ -1,9 +1,10 @@
-package lab7.active_object.method_requests;
+package lab7.asynchronous.active_object.method_requests;
 
-import lab7.active_object.Buffer;
+import lab7.asynchronous.active_object.Buffer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 public class ProduceMethodRequest implements IMethodRequest<Void> {
@@ -27,7 +28,7 @@ public class ProduceMethodRequest implements IMethodRequest<Void> {
     }
 
     @Override
-    public CompletableFuture<Void> execute() {
+    public CompletableFuture<Void> execute() throws InterruptedException {
         buffer.produce(elementsToInsert);
         future.complete(null);
         return future;
@@ -37,5 +38,18 @@ public class ProduceMethodRequest implements IMethodRequest<Void> {
     @Override
     public String toString() {
         return "Produce Method Request: " + this.elementsToInsert.size();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProduceMethodRequest that = (ProduceMethodRequest) o;
+        return Objects.equals(elementsToInsert, that.elementsToInsert) && Objects.equals(buffer, that.buffer) && Objects.equals(future, that.future);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(elementsToInsert, buffer, future);
     }
 }

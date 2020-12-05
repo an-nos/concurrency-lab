@@ -1,42 +1,40 @@
-package lab7.active_object.scheduler;
+package lab7.asynchronous.active_object.scheduler;
 
-import lab7.active_object.method_requests.ConsumeMethodRequest;
-import lab7.active_object.method_requests.IMethodRequest;
-import lab7.active_object.method_requests.ProduceMethodRequest;
+import lab7.asynchronous.active_object.method_requests.ConsumeMethodRequest;
+import lab7.asynchronous.active_object.method_requests.IMethodRequest;
+import lab7.asynchronous.active_object.method_requests.ProduceMethodRequest;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
+import java.util.Set;
 import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ActivationQueue {
 
-    private List<IMethodRequest<?>> allMethodRequestsQueue;
-    private List<ConsumeMethodRequest> consumeMethodRequests;
-    private List<ProduceMethodRequest> produceMethodRequests;
+    private Set<IMethodRequest<?>> allMethodRequestsQueue;
+    private Set<ConsumeMethodRequest> consumeMethodRequests;
+    private Set<ProduceMethodRequest> produceMethodRequests;
 
     private ReentrantLock queueLock;
     private Condition isEmptyCondition;
-    LinkedHashSet
+
 
 
     public ActivationQueue(){
-        this.allMethodRequestsQueue = new ArrayList<>();
-        this.consumeMethodRequests = new ArrayList<>();
-        this.produceMethodRequests = new ArrayList<>();
+        this.allMethodRequestsQueue = new LinkedHashSet<>();
+        this.consumeMethodRequests = new LinkedHashSet<>();
+        this.produceMethodRequests = new LinkedHashSet<>();
         this.queueLock = new ReentrantLock();
         this.isEmptyCondition = queueLock.newCondition();
     }
 
 
-    private List<? extends IMethodRequest<?>> getQueueOf(IMethodRequest<?> methodRequest){
+    private Set<? extends IMethodRequest<?>> getQueueOf(IMethodRequest<?> methodRequest){
         if(methodRequest instanceof ConsumeMethodRequest) return consumeMethodRequests;
         return produceMethodRequests;
     }
 
-    private List<? extends IMethodRequest<?>> getOppositeQueueTo(IMethodRequest<?> methodRequest){
+    private Set<? extends IMethodRequest<?>> getOppositeQueueTo(IMethodRequest<?> methodRequest){
         if(methodRequest instanceof ProduceMethodRequest) return consumeMethodRequests;
         return produceMethodRequests;
     }
@@ -68,26 +66,25 @@ public class ActivationQueue {
         try {
             while (allMethodRequestsQueue.isEmpty()) isEmptyCondition.await();
 
-            methodRequest = allMethodRequestsQueue.get(0);
-            List<? extends IMethodRequest<?>> specificQueue = getQueueOf(methodRequest);
+            methodRequest = allMethodRequestsQueue.iterator().next();
+            Set<? extends IMethodRequest<?>> specificQueue = getQueueOf(methodRequest);
 
             if (methodRequest.guard()) {
-                allMethodRequestsQueue.remove(0);
-                specificQueue.remove(0);
+                specificQueue.remove(methodRequest);
             } else {
 
-                List<? extends IMethodRequest<?>> oppositeQueue = getOppositeQueueTo(methodRequest);
+                specificQueue = getOppositeQueueTo(methodRequest);
 
-                while (oppositeQueue.isEmpty()) isEmptyCondition.await();
+                while (specificQueue.isEmpty()) isEmptyCondition.await();
 
-                methodRequest = oppositeQueue.get(0);
+                methodRequest = specificQueue.iterator().next();
 
-                if (methodRequest.guard()) {
-                    allMethodRequestsQueue.remove(methodRequest);
-                    oppositeQueue.remove(0);
-                }
+                if (methodRequest.guard())
+                    specificQueue.remove(methodRequest);
+
 
             }
+            allMethodRequestsQueue.remove(methodRequest);
         }
         finally {
             queueLock.unlock();

@@ -1,4 +1,4 @@
-package lab7.active_object;
+package lab7.asynchronous.active_object;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,22 +7,25 @@ public class Buffer {
 
     private List<Integer> elements;
     private int limit;
+    private int taskTime;
 
-    public Buffer(int limit){
+    public Buffer(int limit, int taskTime){
         this.limit = limit;
+        this.taskTime = taskTime;
         this.elements = new ArrayList<>();
     }
 
-    public void produce(List<Integer> elementsToInsert){
+    public void produce(List<Integer> elementsToInsert) throws InterruptedException {
         if(elementsToInsert.size() <= limit - elements.size()){
             elements.addAll(elementsToInsert);
+            Thread.sleep(taskTime);
         }
         else{
             throw new IllegalArgumentException("Buffer: tried to produce too many elements");
         }
     }
 
-    public List<Integer> consume(int numberToTake){
+    public List<Integer> consume(int numberToTake) throws InterruptedException {
         if(elements.size() >= numberToTake){
 
             List<Integer> consumedElements = new ArrayList<>();
@@ -31,6 +34,7 @@ public class Buffer {
                 consumedElements.add(elements.remove(0));
             }
 
+            Thread.sleep(taskTime);
             return consumedElements;
 
         }
