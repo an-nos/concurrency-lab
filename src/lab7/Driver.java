@@ -1,16 +1,16 @@
 package lab7;
 
-import lab7.asynchronous.AsynchronousMain;
-import lab7.synchronous.SynchronousMain;
+import lab7.asynchronous.AsynchronousRunner;
+import lab7.synchronous.SynchronousRunner;
 
 public class Driver {
     public static void main(String[] args) throws InterruptedException {
         Runner runner;
         if(args[0].equals("sync")) {
-            runner = new SynchronousMain();
+            runner = new SynchronousRunner();
         }
         else{
-            runner = new AsynchronousMain();
+            runner = new AsynchronousRunner();
         }
         runner.init(args);
         runner.run();

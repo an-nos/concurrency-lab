@@ -3,17 +3,16 @@ package lab7.synchronous;
 import lab7.Runner;
 import lab7.synchronous.buffer.BoolBuffer;
 import lab7.synchronous.worker.Consumer;
-import lab7.synchronous.worker.Producer;
-import lab7.synchronous.worker.WorkerRunnable;
+import lab7.synchronous.worker.Producer;import lab7.synchronous.worker.WorkerRunnable;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class SynchronousMain extends Runner {
+public class SynchronousRunner extends Runner {
 
-    public SynchronousMain(){
+    public SynchronousRunner(){
         super();
     }
 

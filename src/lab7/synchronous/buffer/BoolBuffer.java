@@ -38,6 +38,7 @@ public class BoolBuffer implements Buffer {
     }
 
     public void produce(List<Integer> newVals, int idx) throws InterruptedException {
+        int size = newVals.size();
 
         lock1.lock();
 
@@ -51,7 +52,7 @@ public class BoolBuffer implements Buffer {
             }
 
             isFirstProducer = true;
-            while(values.size() + newVals.size() > limit){
+            while(values.size() + size > limit){
 //                System.out.println("firstProducer: P" + idx + " wants " + newVals.size());
                 firstProducer.await();
             }
@@ -60,13 +61,13 @@ public class BoolBuffer implements Buffer {
 
 //            System.out.println("P" + idx + " produced " + newVals.size());
 
+            for(int i = 0; i < size; i++) Thread.sleep(taskTime);
 
             restProducers.signal();
             firstConsumer.signal();
 
             isFirstProducer = false;
 
-            Thread.sleep(taskTime);
 
 
         }
@@ -97,12 +98,12 @@ public class BoolBuffer implements Buffer {
             for(int i = 0; i < numberToTake; i++) takenVals.add(values.remove(0));
 
 //            System.out.println("C"+ idx + " consumed " + takenVals.size());
+            for(int i = 0; i < numberToTake; i++) Thread.sleep(taskTime);
 
             restConsumers.signal();
             firstProducer.signal();
 
             isFirstConsumer = false;
-            Thread.sleep(taskTime);
 
 
             return takenVals;

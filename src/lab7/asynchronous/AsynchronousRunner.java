@@ -7,17 +7,15 @@ import lab7.asynchronous.active_object.scheduler.BufferScheduler;
 import lab7.asynchronous.client.TimeManager;
 import lab7.asynchronous.client.worker.Consumer;
 import lab7.asynchronous.client.worker.Producer;
-import lab7.asynchronous.client.worker.WorkerRunnable;
 
 
-import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class AsynchronousMain extends Runner {
+public class AsynchronousRunner extends Runner {
 
-    public AsynchronousMain(){
+    public AsynchronousRunner(){
         super();
     }
 

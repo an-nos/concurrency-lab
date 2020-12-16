@@ -16,9 +16,10 @@ public class Buffer {
     }
 
     public void produce(List<Integer> elementsToInsert) throws InterruptedException {
-        if(elementsToInsert.size() <= limit - elements.size()){
+        int size = elementsToInsert.size();
+        if(size <= limit - elements.size()){
             elements.addAll(elementsToInsert);
-            Thread.sleep(taskTime);
+            for(int i = 0; i < size; i++) Thread.sleep(taskTime);
         }
         else{
             throw new IllegalArgumentException("Buffer: tried to produce too many elements");
@@ -32,9 +33,9 @@ public class Buffer {
 
             for(int i = 0; i < numberToTake; i++){
                 consumedElements.add(elements.remove(0));
+                Thread.sleep(taskTime);
             }
 
-            Thread.sleep(taskTime);
             return consumedElements;
 
         }
