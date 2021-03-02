@@ -11,24 +11,27 @@ public class Producer2 implements CSProcess {
     private One2OneChannelInt channel;
     private int start;
 
-    // constructor
     public Producer2(final One2OneChannelInt out, int start) {
         channel = out;
         this.start = start;
     }
-    // end constructor
 
     public void run() {
         int item;
-        ChannelOutputInt channelOutput = channel.out();
+//        ChannelOutputInt channelOutput = channel.out();
         for (int k = 0; k < 100; k++) {
-            item = (int) (Math.random() * 100) + 1 + start;
-            channelOutput.write(item);
-
+            item = k;
+//            item = (int) (Math.random() * 100) + 1 + start;
+            channel.out().write(item);
+            System.out.println("Producer: " + item);
 //              channel.write(item);
         } // for
 //        channel.write(-1);
-        channelOutput.write(-1);
-        System.out.println("Producer" + start + " ended.");
+        channel.out().write(-1);
+        System.out.println("Producer " + start + " ended.");
     } // run
 } // class Producer2
+
+// ŚRODA 14.40 - do 13.45
+// bufor ograniczony
+

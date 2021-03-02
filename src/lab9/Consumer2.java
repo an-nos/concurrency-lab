@@ -11,8 +11,7 @@ public class Consumer2 implements CSProcess {
     private One2OneChannelInt in;
     private One2OneChannelInt req;
 
-    public Consumer2(final One2OneChannelInt req, final
-    One2OneChannelInt in) {
+    public Consumer2(final One2OneChannelInt req, final One2OneChannelInt in) {
         this.req = req;
         this.in = in;
     } // constructor
@@ -28,10 +27,11 @@ public class Consumer2 implements CSProcess {
 //            item = in.read();
             if (item < 0)
                 break;
-            System.out.println(item);
+            System.out.println("Consumer: " + item);
         } // for
         System.out.println("Consumer ended.");
     } // run
 } // class Consumer2
 
-//czy beda od razu zadania z czer
+// schemat komunikacji
+//
